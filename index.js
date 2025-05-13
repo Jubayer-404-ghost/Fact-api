@@ -4,7 +4,7 @@ const fs = require("fs");
 
 const app = express();
 
-app.get("/fact", (req, res) => {
+app.get("/fect", (req, res) => {
   const videoFilePath = path.join(__dirname, "fect.json");
 
   fs.readFile(videoFilePath, "utf8", (err, videoData) => {
@@ -24,7 +24,7 @@ app.get("/fact", (req, res) => {
         });
       }
 
-      const randomFact = videos[Math.floor(Math.random() * fact.length)];
+      const randomFact = fect[Math.floor(Math.random() * fact.length)];
 
       const response = {
         status: "success",
