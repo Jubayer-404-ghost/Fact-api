@@ -1,11 +1,14 @@
 const express = require('express');
 const fs = require('fs');
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 let facts = [];
+
 try {
-  const data = fs.readFileSync('./fact.json', 'utf8');
+  const filePath = path.join(__dirname, 'fact.json'); // __dirname দিয়ে পাথ ঠিক করা
+  const data = fs.readFileSync(filePath, 'utf8');
   const parsed = JSON.parse(data);
   facts = parsed.facts || [];
 } catch (error) {
