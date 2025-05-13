@@ -4,14 +4,14 @@ const fs = require("fs");
 
 const app = express();
 
-app.get("/video", (req, res) => {
-  const videoFilePath = path.join(__dirname, "video.json");
+app.get("/fact", (req, res) => {
+  const videoFilePath = path.join(__dirname, "fect.json");
 
   fs.readFile(videoFilePath, "utf8", (err, videoData) => {
     if (err) {
       return res.status(500).json({
         status: "failed",
-        error: "Error reading video.json"
+        error: "Fact not available "
       });
     }
 
@@ -20,18 +20,18 @@ app.get("/video", (req, res) => {
       if (!Array.isArray(videos) || videos.length === 0) {
         return res.status(500).json({
           status: "failed",
-          error: "No videos found in video.json"
+          error: "No videos found in Fact"
         });
       }
 
-      const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+      const randomFact = videos[Math.floor(Math.random() * fact.length)];
 
       const response = {
         status: "success",
-        url: randomVideo,
+        url: fact,
         author: {
-          Name: "MR᭄﹅ MAHABUB﹅ メꪜ",
-          Facebook: "https://www.facebook.com/www.xnxx.com140"
+          Name: "Jubayer",
+          Facebook: "https://www.facebook.com/profile.php?id=61573052122735"
         }
       };
 
@@ -40,7 +40,7 @@ app.get("/video", (req, res) => {
     } catch (parseError) {
       res.status(500).json({
         status: "failed",
-        error: "Error parsing video.json"
+        error: "Error Fact"
       });
     }
   });
