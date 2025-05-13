@@ -4,7 +4,7 @@ const fs = require("fs");
 
 const app = express();
 
-app.get("/fact", (req, res) => {
+app.get("/ccc", (req, res) => {
   const factFilePath = path.join(__dirname, "fact.json");
 
   fs.readFile(factFilePath, "utf8", (err, data) => {
