@@ -1,52 +1,36 @@
-const express = require("express");
-const path = require("path");
-const fs = require("fs");
-
+const express = require('express');
+const fs = require('fs');
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.get("/fect", (req, res) => {
-  const videoFilePath = path.join(__dirname, "fect.json");
+let facts = [];
+try {
+  const data = fs.readFileSync('./fact.json', 'utf8');
+  const parsed = JSON.parse(data);
+  facts = parsed.facts || [];
+} catch (error) {
+  console.error('Could not read fact.json:', error);
+}
 
-  fs.readFile(videoFilePath, "utf8", (err, videoData) => {
-    if (err) {
-      return res.status(500).json({
-        status: "failed",
-        error: "Fact not available "
-      });
+app.get('/fact', (req, res) => {
+  if (facts.length === 0) {
+    return res.status(500).json({ status: "error", message: 'No facts available' });
+  }
+
+  const fact = facts[Math.floor(Math.random() * facts.length)];
+
+  const response = {
+    status: "success",
+    fact: `❏ আচ্ছা আপনি কি এনা জানেন? ❑\n\n➪ যে ${fact} ❞\n\n𝗔𝗨𝗧𝗛𝗢𝗥 : 🎀 𝗝𝗨𝗕𝗔𝗬𝗘𝗥 🎀`,
+    author: {
+      name: "Jubayer",
+      facebook: "https://www.facebook.com/profile.php?id=61573052122735"
     }
+  };
 
-    try {
-      const videos = JSON.parse(videoData);
-      if (!Array.isArray(videos) || videos.length === 0) {
-        return res.status(500).json({
-          status: "failed",
-          error: "No videos found in Fact"
-        });
-      }
-
-      const randomFact = fect[Math.floor(Math.random() * fact.length)];
-
-      const response = {
-        status: "success",
-        url: fact,
-        author: {
-          Name: "Jubayer",
-          Facebook: "https://www.facebook.com/profile.php?id=61573052122735"
-        }
-      };
-
-      res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(response, null, 2));
-    } catch (parseError) {
-      res.status(500).json({
-        status: "failed",
-        error: "Error Fact"
-      });
-    }
-  });
+  res.json(response);
 });
 
-const PORT = process.env.PORT || 2929;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
